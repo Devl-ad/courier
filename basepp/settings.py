@@ -129,7 +129,7 @@ USE_TZ = True
 STATIC_URL = "assets/"
 STATICFILES_DIRS = (os.path.join(BASE_DIR, "assets"),)
 
-STATIC_ROOT = "/home/globald3/public_html/assets/"
+STATIC_ROOT = "/home/globzrng/public_html/assets/"
 
 
 # Default primary key field type
