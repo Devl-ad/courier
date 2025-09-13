@@ -1,0 +1,456 @@
+{% extends "layouts/home.html" %}
+<!--  -->
+{% block title %} Track your package {% endblock title %}
+<!--  -->
+{% block style %}
+
+<style>
+  td.text-right {
+    text-align: right;
+  }
+  .input-track {
+    padding: 70px 20px;
+    background-color: #232331;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+  }
+  form#Searchform {
+    width: 400px;
+    /* text-align: center; */
+  }
+  form#Searchform input[type="text"] {
+    border-radius: 10px 0 0 10px;
+
+    width: 75%;
+
+    border: none;
+    font-size: 20px;
+    height: 60px;
+    padding: 8px;
+    float: left;
+    font-family: "Lato";
+  }
+  form#Searchform input[type="submit"],
+  .cta-form button {
+    border-radius: 0 10px 10px 0;
+    background: #d03232;
+    width: 25%;
+    transition: all 0.5s ease 0s;
+    color: #fff;
+    border: none;
+    font-size: 13px;
+    height: auto;
+    padding: 15px;
+    float: left;
+    font-family: "Lato";
+  }
+  section {
+    padding: 60px 0 60px 0;
+    background: #fff;
+  }
+  .track-box .track-title {
+    font-size: 25px;
+
+    margin-bottom: 10px;
+    border-bottom: 1px solid #666464;
+  }
+  .track-box span {
+    font-size: 18px;
+
+    font-family: "Nunito", sans-serif;
+  }
+  #mobm {
+    display: none !important;
+  }
+  @media (max-width: 992px) {
+    .track-box .track-title {
+      border-bottom: none;
+    }
+  }
+  /* Small Devices Potrait */
+  @media (max-width: 767px) {
+    #mobT {
+      display: none !important;
+    }
+    #mobm {
+      display: block !important;
+    }
+  }
+  #mobm .card .card-body h3 {
+    padding: 15px;
+    font-size: 20px !important;
+  }
+  #mobm td {
+    border: none;
+    border-top: 1px solid #eceff7;
+    font-weight: 700;
+    font-size: 15px;
+    color: #888888;
+  }
+  #mobm .card {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border-radius: 0.375rem;
+    -webkit-box-shadow: 0 0.15rem 1.75rem 0 rgb(58 59 69 / 15%) !important;
+    box-shadow: 0 0.15rem 1.75rem 0 rgb(58 59 69 / 15%) !important;
+  }
+  #mobm .card .card-body {
+    padding: 2px;
+  }
+  .table-striped-shipper {
+    background-color: #f9f9f9;
+  }
+  .table-striped-shipper td {
+    border-top: none !important;
+  }
+</style>
+{% endblock style %}
+<!--  -->
+{% block content %}
+<!--  breadcrumb-area  start -->
+<!-- {% include 'components/breadcrumb.html' with name="Track package" %} -->
+<!--  breadcrumb-area  end -->
+
+<!--  contact-area  start -->
+<section class="input-track">
+  <form role="search" method="get" id="Searchform" action="/track/">
+    <div class="mb-">
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Insert tracking number here"
+        value="{% if package %} {{package.track_id}} {% endif %}"
+        name="track-id"
+      />
+    </div>
+    <div class="input-gp mb-">
+      <input type="submit" value="TRACK IT" name="submit" />
+    </div>
+  </form>
+</section>
+
+{% if package %}
+<section id="mobT">
+  <div class="container">
+    <!-- <h1 class="text-center">TrACK ID : 1HWJ2820</h1> -->
+
+    <div class="row align-item-center justify-content-center">
+      <div class="col-md-6">
+        <div class="track-box">
+          <h4 class="track-title">Shippers information</h4>
+          <p>
+            <span> {{package.sname}}</span> <br />
+            <span>{{package.scountry}}</span><br />
+            <span>{{package.sphone}}</span>
+          </p>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="track-box">
+          <h4 class="track-title">Receivers information</h4>
+          <p>
+            <span>{{package.rname}} </span> <br />
+            <span>{{package.raddress}} </span><br />
+            <span>{{package.rpostal}}</span><br />
+            <span>{{package.rphone}}</span><br />
+            <span>{{package.remail}}</span><br />
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="row align-item-center justify-content-center">
+      <div class="col-md-3">
+        <div class="track-box">
+          <h4 class="track-title">Origin:</h4>
+          <p><span>{{package.origin}}</span><br /></p>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="track-box">
+          <h4 class="track-title">Current Location:</h4>
+          <p>
+            <span class="text-success">{{package.current_location}}</span><br />
+          </p>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="track-box">
+          <h4 class="track-title">Destination:</h4>
+          <p><span>{{package.destination}}</span><br /></p>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="track-box">
+          <h4 class="track-title">weight:</h4>
+          <p><span>{{package.weight}}</span><br /></p>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="track-box">
+          <h4 class="track-title">Shipment mode:</h4>
+          <p><span>{{package.shipment_mode}}</span><br /></p>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="track-box">
+          <h4 class="track-title">Carrier Ref No:</h4>
+          <p><span>{{package.carrier_ref_no}}</span><br /></p>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="track-box">
+          <h4 class="track-title">Product:</h4>
+          <p><span>{{package.product}}</span><br /></p>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="track-box">
+          <h4 class="track-title">Qty:</h4>
+          <p><span>{{package.quantity}}</span><br /></p>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="track-box">
+          <h4 class="track-title">Payment mode:</h4>
+          <p><span>{{package.payment_mode}}</span><br /></p>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="track-box">
+          <h4 class="track-title">Departure Date:</h4>
+          <p><span>{{package.departure_date}}</span><br /></p>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="track-box">
+          <h4 class="track-title">Expected Delivery Date:</h4>
+          <p><span>{{package.expected_delivery_date}}</span><br /></p>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="track-box">
+          <h4 class="track-title">Pick-up Date:</h4>
+          <p><span>{{package.pick_up_date}}</span><br /></p>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="track-box">
+          <h4 class="track-title">Status:</h4>
+          <p><span class="text-warning">{{package.status}}</span><br /></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="mobm">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card mb-4">
+          <div class="card-body">
+            <div class="">
+              <h3>Shippers Information</h3>
+              <table class="table table-striped-shipper">
+                <tbody>
+                  <tr>
+                    <td>Shippers Name</td>
+                    <td class="text-right">
+                      <span id="with-user"> {{package.sname}}</span>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td>Shippers country</td>
+                    <td class="text-right text-danger">
+                      <span id="with-amount">{{package.scountry}}</span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Shippers Phone</td>
+                    <td class="text-right text-warning">
+                      <span id="with-method">{{package.sphone}}</span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="">
+              <h3>Receivers Information</h3>
+              <table class="table table-striped-shipper">
+                <tbody>
+                  <tr>
+                    <td>Receivers Name</td>
+                    <td class="text-right text-warning">
+                      <span id="with-method">{{package.rname}}</span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Receivers Address</td>
+                    <td class="text-right text-warning">
+                      <span id="with-method">{{package.raddress}}</span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Receivers Phone</td>
+                    <td class="text-right text-warning">
+                      <span id="with-method">{{package.rphone}}</span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Receivers Postal</td>
+                    <td class="text-right">
+                      <span id="with-date">{{package.rpostal}}</span>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td>Receivers Email</td>
+                    <td class="text-right">
+                      <span>{{package.remail}}</span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="">
+              <h3>Shipment Information</h3>
+              <table class="table table-striped-shipper">
+                <tbody>
+                  <tr>
+                    <td>Origin</td>
+                    <td class="text-right">
+                      <span>{{package.origin}}</span>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td>Track Id</td>
+                    <td class="text-right">
+                      <span>{{package.track_id}}</span>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td>Destination</td>
+                    <td class="text-right">
+                      <span>{{package.destination}}</span>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td>weight</td>
+                    <td class="text-right">
+                      <span>{{package.weight}}</span>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td>Shipment Mode</td>
+                    <td class="text-right">
+                      <span>{{package.shipment_mode}}</span>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td>Carrier Ref No</td>
+                    <td class="text-right">
+                      <span>{{package.carrier_ref_no}}</span>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td>Product</td>
+                    <td class="text-right">
+                      <span>{{package.product}}</span>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td>Quantity</td>
+                    <td class="text-right">
+                      <span>{{package.quantity}}</span>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td>Payment Mode</td>
+                    <td class="text-right">
+                      <span>{{package.payment_mode}}</span>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td>Departure Date</td>
+                    <td class="text-right">
+                      <span>{{package.departure_date}}</span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Delivery Date</td>
+                    <td class="text-right">
+                      <span>{{package.expected_delivery_date}}</span>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td>Pickup Date</td>
+                    <td class="text-right">
+                      <span>{{package.pick_up_date}}</span>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td>Current Location</td>
+                    <td class="text-right">
+                      <span>{{package.current_location}}</span>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td>Status</td>
+                    <td
+                      class="text-right {% if package.status == 'PENDING' %} text-warning {% else %} text-success {% endif %}"
+                    >
+                      <span id="with-status">{{package.status}}</span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% else %}
+
+<section>
+  <div class="container">
+    <h4 class="text-center">No Package Found</h4>
+  </div>
+</section>
+{% endif %}
+<!--  contact-area  end -->
+
+{% endblock content %}

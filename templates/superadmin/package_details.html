@@ -1,0 +1,235 @@
+{% extends "layouts/superadmin.html" %}{% load crispy_forms_tags %}
+<!---->
+{% block title %} Withdrawals {% endblock title %} {% block style %}
+<style>
+  ul {
+    padding: 0;
+  }
+
+  ul.user_balance_details li {
+    display: inline-block;
+    justify-content: space-between;
+    padding: 10px;
+    border-bottom: 1px solid #f1f4f8;
+    text-align: center;
+    margin-left: 6px;
+  }
+</style>
+{% endblock style %} {% block content %}
+<!--[container-fluid]-->
+<div class="container-fluid" id="container-wrapper">
+  <div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Package</h1>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="/">Home</a></li>
+      <li class="breadcrumb-item active" aria-current="page">packages</li>
+    </ol>
+  </div>
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card mb-4">
+        <div
+          class="card-header py-3 d-flex flex-row align-items-center justify-content-between"
+        >
+          <h6 class="m-0 font-weight-bold text-primary">Details</h6>
+        </div>
+
+        <div class="card-body">
+          <div class="table-responsive table-upgrade">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Package</th>
+                  <th class="text-center">Details</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Shippers Name</td>
+                  <td class="text-center">
+                    <span id="with-user">{{package.sname}}</span>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>Shippers country</td>
+                  <td class="text-center text-danger">
+                    <span id="with-amount">{{package.scountry}}</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Shippers Phone</td>
+                  <td class="text-center text-warning">
+                    <span id="with-method">{{package.sphone}}</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Receivers Name</td>
+                  <td class="text-center text-warning">
+                    <span id="with-method">{{package.rname}}</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Receivers Address</td>
+                  <td class="text-center text-warning">
+                    <span id="with-method">{{package.raddress}}</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Receivers Phone</td>
+                  <td class="text-center text-warning">
+                    <span id="with-method">{{package.rphone}}</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Receivers Postal</td>
+                  <td class="text-center">
+                    <span id="with-date">{{package.rpostal}}</span>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>Receivers Email</td>
+                  <td class="text-center">
+                    <span>{{package.remail}}</span>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>Origin</td>
+                  <td class="text-center">
+                    <span>{{package.origin}}</span>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>Track Id</td>
+                  <td class="text-center">
+                    <span>{{package.track_id}}</span>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>Destination</td>
+                  <td class="text-center">
+                    <span>{{package.destination}}</span>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>weight</td>
+                  <td class="text-center">
+                    <span>{{package.weight}}</span>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>Shipment Mode</td>
+                  <td class="text-center">
+                    <span>{{package.shipment_mode}}</span>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>Carrier Ref No</td>
+                  <td class="text-center">
+                    <span>{{package.carrier_ref_no}}</span>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>Product</td>
+                  <td class="text-center">
+                    <span>{{package.product}}</span>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>Quantity</td>
+                  <td class="text-center">
+                    <span>{{package.quantity}}</span>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>Payment Mode</td>
+                  <td class="text-center">
+                    <span>{{package.payment_mode}}</span>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>Departure Date</td>
+                  <td class="text-center">
+                    <span>{{package.departure_date}}</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Delivery Date</td>
+                  <td class="text-center">
+                    <span>{{package.expected_delivery_date}}</span>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>Pickup Date</td>
+                  <td class="text-center">
+                    <span>{{package.pick_up_date}}</span>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>Status</td>
+                  <td
+                    class="text-center {% if package.status == 'PENDING' %} text-warning {% else %} text-success {% endif %}"
+                  >
+                    <span id="with-status">{{package.status}}</span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="card-footer">
+          <div class="d-flex space-bt">
+            <a
+              href="/admin/home/package/{{package.id}}/change/"
+              class="btn btn-danger"
+              target="_blank"
+            >
+              <i class="fas fa-pen"></i> Edit
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--[container-fluid ends]-->
+
+<!-- Footer -->
+<footer class="sticky-footer bg-white">
+  <div class="container my-auto">
+    <div class="copyright text-center my-auto">
+      <span
+        >copyright &copy;
+        <script>
+          document.write(new Date().getFullYear());
+        </script>
+        - developed by
+        <b><a href="#" target="_blank">Sammy</a></b>
+      </span>
+    </div>
+  </div>
+</footer>
+<!-- Footer -->
+
+{% endblock content %} {% block script %}
+
+<script>
+  $(document).ready(function () {
+    $("#dataTable").DataTable(); // ID From dataTable
+    $("#dataTableHover").DataTable(); // ID From dataTable with Hover
+  });
+</script>
+{% endblock script %}
